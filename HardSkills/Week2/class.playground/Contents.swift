@@ -268,4 +268,8 @@ print("film id \(f1.yonetmen!.yonetmen_adi!)")
 
 
 
+func calculate(dayNum:Int,dayPrice:Int,extraHour:Int) {
+    
+    if extraHour
+}
 

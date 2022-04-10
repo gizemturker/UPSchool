@@ -10,8 +10,7 @@ print(greeting)
 // yemeksepeti ör tedarikçiler satıcılar var onlara ait özl taslak yapılabilir
 // mhrs dr-hasta özl farklı
 // hep amacımız bir class oluşturmak nesne oluşturmak amaçlı .... struct class class daha fazla faydalı ??
-*/
-
+/*
 class Car {
     var color:String?
     var tork:Int?
@@ -377,3 +376,188 @@ class Movie {
         return "The duration of the movie is \(duration) minutes"
           }
     }
+
+*/
+// Inheritance = Kalıtım
+
+// gördüğünüz her sayfanın bir tasarım vardır bir de onun sınıfı vardır. Tasarımı destekleyen sınıf nasıl olur. ViewController->UIViewController
+// override func viewDidLoad
+
+// Kalıtım varsa sağdaki sınıf özellik aktaransa super class
+// Arac super class araba sub class
+
+// *** kalıtım tek yönlüdür. Araba araçtan bir kalıtım aldı başka sınıftan kalıtım alamaz. bir sınıf bir sınıftan miras alabilir.
+
+// Değişken özelinde bir örnek. // :Ev yazdık sonradan   super.init(pencereSayisi: pencereSayisi) ekledik
+*/
+
+class Ev {
+    
+    var pencereSayisi:Int?
+    
+    init(pencereSayisi:Int){
+        self.pencereSayisi = pencereSayisi
+    }
+}
+
+class Saray : Ev {
+    
+    var kuleSayisi:Int?
+    
+    init(kuleSayisi:Int,pencereSayisi:Int){
+        self.kuleSayisi = kuleSayisi
+        super.init(pencereSayisi: pencereSayisi)
+    }
+}
+
+class Villa : Ev {
+    
+var garajVarMi:Bool?
+    init(garajVarMi:Bool,pencereSayisi:Int) {
+        self.garajVarMi = garajVarMi
+        super.init(pencereSayisi: pencereSayisi)
+    }
+    
+}
+
+var topkapiSarayi = Saray(kuleSayisi: 5, pencereSayisi: 300)
+var bogazVilla = Villa(garajVarMi: true, pencereSayisi: 30)
+
+print(topkapiSarayi.kuleSayisi!)
+print(topkapiSarayi.pencereSayisi!)
+
+print(bogazVilla.pencereSayisi!)
+print(bogazVilla.garajVarMi!)
+
+//override kullanımı
+
+// override neden gerçekleşiyor. ezme anlamına geliyor. fonk tekrar kullanılması. overloading aynı fonk kullanılması.
+// burda override olması için kalıtım gerekiyor. sınıflar arası bir ilişki olmadan kalıtım olmaz. bu önkoşulumuz var.
+
+
+class Hayvan {
+    func sesCikar(){
+        print("Sesim yok")
+    }
+}
+
+
+class Memeli : Hayvan {
+    
+   
+}
+
+
+class Kedi : Memeli {
+    override func sesCikar() {
+        print("miyav miyav")
+    }
+    
+}
+
+
+class Kopek : Memeli {
+    
+    override func sesCikar() {
+        print("hav hav")
+    }
+    
+}
+// hayvan sınıfı ile bu oluşturduğumuz nesnelere nasıl erişirim
+var hayvan = Hayvan()
+var memeli = Memeli()
+var kedi = Kedi()
+var kopek = Kopek()
+
+hayvan.sesCikar()
+memeli.sesCikar() // bir üst sınıfı olan hayvana çıkıp onun özelliğini kullandı
+kedi.sesCikar()  // kendisinde var override etmiş. artık bu baskın gelir. local dediğimiz şey her zaman baskındır.
+kopek.sesCikar()
+
+// NESNE DÖNÜŞÜMÜ
+// tip dönüşümleri
+// tip kontrolleri "is" ile yapılabilir.
+// Downcasting & Upcasting // dönüşüm yapmak istersen mutlaka kalıtım yapmak gerekir.
+// as! dönüşüm yaparken kodlama gereği bu koda güveniyorum. burda bir dönüşüm olacak hata olma ihtimali düşük ve ben bunu göze alıyorum
+// as? daha kontrol yapı saray nesnesini nil yap
+
+// nesne dönüşümü ÖRNEK
+//Upcasting
+
+var ev = Saray(kuleSayisi: 4, pencereSayisi: 100) as Ev
+
+// downcasting
+
+var saray = Ev(pencereSayisi: 5) as? Saray
+
+// Tip kontrolü
+
+if ev is Ev {
+    print("nesne ev sınıfından türetilmiştir")
+} else {
+    print("nesne ev sınıfından türetilmemiştir")
+}
+
+// Protocol ->> uygulama mimarisinde çok kullanıcaz.
+//Protokol-- interface diğer adıdır. iOS de çok
+// kalıtıma benziyor bir sınıfa özellik aktarmak için kullanıyoruz.
+// çoğunlukla iki sayfadan birbirine köprü oluşturup veri aktarımı yapılıyor
+
+// kalıtım farkı bir sınıfa prot ekleyince protokolün fonk varsa eklemek zorundasın
+// memeli sınıfında eklemek zorunda değildim.
+
+// ama hayvan bir interface olsaydı eklemek zorundaydım
+
+// protocol kullanımı class tarzı tanımlıyorum
+
+protocol MyProtocol {
+    //var degisken:Int? // get veya get set yapmam lazım get ben bunu okuyabilecem set de değer aktarabilcem demek
+    
+    var degisken:Int {get set}
+    
+    func metod1()   // taslak oluştururum süslü parantez yok burada
+    func metod2() -> String
+}
+
+// protokolü konfor etmen gerekir uyarısı bu bir interface kullandın ama fonk eklemedin. interface func ekletmek ister. kullanıp kullanmamak öenmli değil  "type classA does not confirm to protocol
+class ClassA : MyProtocol {
+    var degisken: Int = 10
+    func metod1() {
+        print("metod1 çalıştı")
+    }
+    
+    func metod2() -> String {
+       return "metod2 çalıştı"
+    }
+}
+
+var a = ClassA()
+
+print(a.degisken)
+a.metod1()
+print(a.metod2())
+
+
+// extension genişletme
+    //.. sınıf diyorki birçok sınıfın var istersen o sınıflara ekstra özellikler ekleyebilirsin
+
+// örnek int sınıfının bir sürü özl var ama siz dediniz ki ben kendim bir özellik yazsam ya
+
+extension Int {
+    func carp(sayi:Int) -> Int {
+        return self * sayi
+    }
+}
+
+var x = 3.carp(sayi: 10)
+print(x)
+
+// clousure
+
+var ifade = {
+    print("clousure kullanımı")
+}
+
+ifade()
+
+
