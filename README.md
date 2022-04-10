@@ -1,5 +1,5 @@
 # UPSchool
 
 ## Week3
-![alt text](https://github.com/gizemturker/UPSchool/blob/main/HardSkills/Week3/pizza.png?raw=true)
+<img src="https://github.com/gizemturker/UPSchool/blob/main/HardSkills/Week3/pizza.png?raw=true" alt="pizza" width="200"/>
 
